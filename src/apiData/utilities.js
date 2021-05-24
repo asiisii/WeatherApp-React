@@ -1,4 +1,6 @@
-let day;
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"]
 const cleanAPIData = {
   currData: (currWeather) => {
     const location = `${currWeather.name}, ${currWeather.sys.country}`
@@ -23,6 +25,7 @@ const cleanAPIData = {
     dailyForecast.pop()
     return dailyForecast.map(forecast => {
       const icon = forecast.weather[0].icon
+      const day = days[new Date(forecast.dt * 1000).getDay()]
       return {
         img: `http://openweathermap.org/img/wn/${icon}@2x.png`,
         alt: forecast.weather[0].main,
@@ -34,12 +37,9 @@ const cleanAPIData = {
   },
 
   formatDate: () => {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"]
     const current = new Date()
     const date = current.getDate()
-    day = days[current.getDay()]
+    const day = days[current.getDay()]
     const month = months[current.getMonth()]
     const time = current.toLocaleTimeString([], 
       { hour: '2-digit', minute: "2-digit" })
