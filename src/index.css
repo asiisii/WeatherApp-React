@@ -67,7 +67,10 @@ header {
 ::placeholder { 
   color: white;
 }
-
+.btn {
+  margin: 2px;
+  
+}
 .btn:hover {
   transform: scale(1.2);
   background: lightgray;
