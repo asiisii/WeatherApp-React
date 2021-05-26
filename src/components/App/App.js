@@ -42,7 +42,7 @@ class App extends React.Component {
       currWeather: cleanAPIData.cleanCurrData(e)
       })
     })
-    .catch(() => this.setState({error: 'Request failed!!'}))
+    .catch(() => this.setState({error: 'Can\'t find the city with that name'}))
     // console.log('mount');
   }
 
