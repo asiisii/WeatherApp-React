@@ -64,11 +64,11 @@ class App extends React.Component {
           currData={this.degreeConversion}
           />
         </header>
-        {/* {this.state.error && <h2>{this.state.error}</h2>}
+        {this.state.error && <h2>{this.state.error}</h2>}
         {!this.state.error && !this.state.currWeather 
         && <h2>Loading...</h2>}
         {!this.state.error && !this.state.forecast 
-        && <h2>Loading...</h2>} */}
+        && <h2>Loading...</h2>}
         {this.state.currWeather && !this.state.error &&
         <section className="today-container">
           <Current weather={this.state.currWeather} />
