@@ -14,6 +14,8 @@ class App extends React.Component {
       city: 'Broomfield',
       currWeather: '',
       forecast: '',
+      lat: '',
+      lon: '',
       error: ''
     }
   }
@@ -21,22 +23,32 @@ class App extends React.Component {
   getForecast = (lat, lon) => {
     apiCalls.fetchForecastData(lat , lon)
       .then(data => this.setState({
-        forecast: cleanAPIData.forecastData(data)
+        forecast: cleanAPIData.cleanForecastData(data)
       }))
       .catch(() => this.setState({error: 'Request failed!!'}))
   }
 
-  getCurrentWeather = search => {
-    this.setState({city: search})
-    apiCalls.fetchCurrentData(search)
-      .then(data => {
-        this.setState({
-        currWeather: cleanAPIData.currData(data)
-        })
-        this.getForecast(data.coord.lat, data.coord.lon)
+  getCurrentWeather = (cityName, e) => {
+
+    this.setState({city: cityName})
+    apiCalls.fetchCurrentData(cityName)
+    .then(data => {
+      cleanAPIData.assignData(data)
+      this.setState({lat: data.coord.lat, lon: data.coord.lon})
+      this.getForecast(data.coord.lat, data.coord.lon)
+    })
+    .then(() => {
+      this.setState({
+      currWeather: cleanAPIData.cleanCurrData(e)
       })
-      .catch(() => this.setState({error: 'Request failed!!'}))
-      console.log(this.state.city);
+    })
+    .catch(() => this.setState({error: 'Request failed!!'}))
+    // console.log('mount');
+  }
+
+  degreeConversion = e => {
+    cleanAPIData.cleanCurrData(e)
+    this.getCurrentWeather(this.state.city, e)
   }
 
   componentDidMount = () => {
@@ -44,11 +56,13 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.city);
     return (
       <main>
         <header>
-          <Header getCurrentWeather={this.getCurrentWeather}/>
+          <Header 
+          getCurrentWeather={this.getCurrentWeather} 
+          currData={this.degreeConversion}
+          />
         </header>
         {/* {this.state.error && <h2>{this.state.error}</h2>}
         {!this.state.error && !this.state.currWeather 
@@ -57,13 +71,13 @@ class App extends React.Component {
         && <h2>Loading...</h2>} */}
         {this.state.currWeather && !this.state.error &&
         <section className="today-container">
-          < Current weather={this.state.currWeather}/>
+          <Current weather={this.state.currWeather} />
         </section>
         
       }
         {this.state.forecast && !this.state.error &&
         <section className="forecast-container">
-          < Forecast forecast={this.state.forecast}/>
+          <Forecast forecast={this.state.forecast} />
         </section>  
         }
       </main>

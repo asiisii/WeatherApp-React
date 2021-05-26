@@ -4,17 +4,17 @@ class Header extends React.Component {
   constructor() {
     super()
     this.state = {
-      search: ''
+      query: ''
     }
   }
 
   handleChange = (event) => {
-    this.setState({ search: event.target.value });
+    this.setState({ query: event.target.value });
   }
 
   submitCity = event => {
     if (event.key === 'Enter') {
-      this.props.getCurrentWeather(this.state.search)
+      this.props.getCurrentWeather(this.state.query)
     }
   }
 
@@ -28,13 +28,19 @@ class Header extends React.Component {
           name='search'
           max='15'
           autoComplete='off'
-          value={this.state.search}
+          value={this.state.query}
           onChange={event => this.handleChange(event)}
           onKeyPress={event => this.submitCity(event)}
         />
         <div>
-          <button className="btn">°F</button>
-          <button className="btn">°C</button>
+          <button 
+          className="btn imperial"
+          onClick={(e) => this.props.currData(e)}
+          >°F</button>
+          <button 
+          className="btn metric"
+          onClick={(e) => this.props.currData(e)}
+          >°C</button>
         </div>
       </>
     )

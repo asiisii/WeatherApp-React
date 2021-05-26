@@ -1,17 +1,18 @@
 import React from 'react'
 import '../../index.css'
 import '../../responsive.css'
-function Current(currentInfo) {
+
+function Current(weatherData) {
   const {date, loc, img, description, 
-    detail, maxTemp, minTemp, temp, feels} = currentInfo.weather
+    detail, temp, feels, maxTemp, minTemp, deg} = weatherData.weather
   return (
     <>
       <article className="info">
       <p className="date">{date}</p>
       <p className="location">{loc}</p>
-      <p className="high-low">High {maxTemp}° / Low {minTemp}°</p>
+      <p className="high-low">High {maxTemp}{deg} / Low {minTemp}{deg}</p>
       <p className="temp">{temp}</p>
-      <p className="feels-like">Feels like {feels}°</p>
+      <p className="feels-like">Feels like {feels}{deg}</p>
       </article>
       <figure className="icon-container">
         <img className="icon"
@@ -20,7 +21,8 @@ function Current(currentInfo) {
         <figcaption className="today-caption">{detail}</figcaption>
       </figure>
     </>
-  )
+    )
+
 }
 
 export default Current
