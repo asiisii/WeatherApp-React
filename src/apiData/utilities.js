@@ -1,7 +1,7 @@
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"]
-let maximumTemp, minimumTemp, currWeatherData, today, deg, max
+let maximumTemp, minimumTemp, currWeatherData, today, deg, max, temp, feels
 
 const cleanAPIData = {
 
@@ -21,7 +21,6 @@ const cleanAPIData = {
     const location = `${currWeatherData.name}, ${currWeatherData.sys.country}`
     let icon = currWeatherData.weather[0].icon
     let detail = currWeatherData.weather[0].description
-    // console.log(maximumTemp, minimumTemp);
     return {
       date: today,
       loc: location,
@@ -30,8 +29,8 @@ const cleanAPIData = {
       detail: detail.charAt(0).toUpperCase() + detail.slice(1),
       maxTemp: maximumTemp,
       minTemp: minimumTemp,
-      temp: parseInt(currWeatherData.main.temp),
-      feels: parseInt(currWeatherData.main.feels_like),
+      temp: temp,
+      feels: feels,
       deg: deg
     }
   },
@@ -62,13 +61,15 @@ const cleanAPIData = {
       degreeType = e.target.className.split(' ')[1]
     }
     if (degreeType === 'metric') {
-      // console.log('metric');
+      temp = parseInt((currWeatherData.main.temp -32) * 5/9)
+      feels = parseInt((currWeatherData.main.feels_like) * 5/9)
       maximumTemp = parseInt((currWeatherData.main.temp_max - 32) * 5/9)
       minimumTemp = parseInt((currWeatherData.main.temp_min - 32) * 5/9)
       deg = `°C`;
     } 
     else {
-      // console.log('else');
+      temp = parseInt(currWeatherData.main.temp)
+      feels = parseInt(currWeatherData.main.feels_like)
       maximumTemp = parseInt(currWeatherData.main.temp_max)
       minimumTemp = parseInt(currWeatherData.main.temp_min)
       deg = `°F`;

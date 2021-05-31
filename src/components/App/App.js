@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   getCurrentWeather = (cityName, e) => {
-
+    this.setState({error: ''})
     this.setState({city: cityName})
     apiCalls.fetchCurrentData(cityName)
     .then(data => {
